@@ -5,16 +5,17 @@ const board = [
   [null, null, null],
 ];
 
-const GameBoard = () => {
+const GameBoard = ({ activePlayer , handlePlayer}) => {
   const [gameBoard, setGameBoard] = useState(board);
   const handleClick = (rowIndex, colIndex, symbol) => {
     setGameBoard((prevState) => {
       let updatedGameBoard = [
         ...prevState.map((innerArray) => [...innerArray]),
       ];
-      updatedGameBoard[rowIndex][colIndex] = "X";
+      updatedGameBoard[rowIndex][colIndex] = activePlayer;
       return updatedGameBoard;
     });
+    handlePlayer();
   };
   return (
     <ol id="game-board">
@@ -25,7 +26,9 @@ const GameBoard = () => {
               {row.map((playerSymbol, colIndex) => {
                 return (
                   <li key={colIndex}>
-                    <button onClick={() => handleClick(rowIndex, colIndex)}>{playerSymbol}</button>
+                    <button onClick={() => handleClick(rowIndex, colIndex)}>
+                      {playerSymbol}
+                    </button>
                   </li>
                 );
               })}
